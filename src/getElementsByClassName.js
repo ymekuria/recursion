@@ -12,34 +12,33 @@ Returns an array-like object of all child elements which have all of the given c
 var getElementsByClassName = function(className) {
 
   
-  //Push the nodes with matching classes here. 
-  var elementList = [];
+    //Implement this function and add recurrsion
+  var findElement = function(object, searchClass) {
+	  //Iterating through the child nodes of the body.
+	  console.log("this.document: ", document, "document.body, :", document.body);
+	  
+	  for (var i = 0;i < object.children.length; i++) {
+	    
+	    //if the node has a classlist, then compare each value to the target passed in.
+	    if (document.body.children[i].classList.length > 0) {
 
+	      for (var j = 0; j < object.children[i].classList.length; j++) {
 
-  //iterating through the child nodes of the body.
-  console.log("this.document: ", this.document.body, "document, :", document.body);
-  console.log("this.document.body.children: ", document.body.childNodes);  
+	        //This variable references each value in the classList array.
+	        var objClass = object.children[i].classList[j];
 
-  for(var i = 0;i < this.document.body.children.length; i++) {
-    
-    //if the node has a classlist, then compare each value to the target passed in.
-    if(document.body.children[i].classList.length > 0) {
+	        //If the value = the passed in target, the element is pushed to the elementList array.
+	        if (objClass === className) {
+	          var elem = object.children[i];
+	          elementList.push(elem);
+	        }
+	      }
+	    }
+	  }
+  };
+  findElement(document.body, className);
 
-      for(var j = 0; j < document.body.children[i].classList.length; j++) {
-
-        //This variable references each value in the classList array.
-        var objClass = document.body.children[i].classList[j];
-
-        //If the value = the passed in target, the element is pushed to the elementList array.
-        if(objClass === className) {
-          var elem = document.body.children[i];
-          elementList.push(elem);
-        }
-      }
-    }
-  }
-  
-    return elementList;
+  return elementList;
   };
 
 		
