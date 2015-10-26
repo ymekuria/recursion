@@ -20,7 +20,9 @@ var getElementsByClassName = function(className) {
 	  for (var i = 0;i < object.children.length; i++) {
 	    
 	    //if the node has a classlist, then compare each value to the target passed in.
-	    if (document.body.children[i].classList.length > 0) {
+	    findElement(object.children[i], className);
+	    
+	    if (object.children[i].classList.length > 0) {
 
 	      for (var j = 0; j < object.children[i].classList.length; j++) {
 
