@@ -11,43 +11,41 @@ Returns an array-like object of all child elements which have all of the given c
 // But instead we're going to implement it from scratch:
 var getElementsByClassName = function(className) {
 
-//Push the nodes with matching classes here. 
+	//Push the nodes with matching classes here. 
   var elementList = [];
 
-  
   //This function is used to find the target class on each node and add the element to the elementList array.
   var findElement = function(object, searchClass) {
       
     //Iterating through the child element nodes of the passed in object.
-    for (var i = 0; i < object.children.length; i++) {
+    _.each(object.children, function(child) {  
       
       //Using a recursive call to search the children of the children.
-      findElement(object.children[i], className);        
+      findElement(child, className);        
 	    
 	    //If the node has a classlist array, then compare each value to the target passed in.
-	    if (object.children[i].classList.length > 0) {
+	    if (child.classList.length > 0) {
 	    	
 	    	//Iterating through the classlist array.
-		    for (var j = 0; j < object.children[i].classList.length; j++) {
+		    _.each(child.classList, function(objClass) {	
+		        
+	        //If the value = the passed in target, the element is pushed to the elementList array.
+	        if (objClass === className) {
+	          var elem = child;
 
-		        //This variable references each value in the classList array.
-		        var objClass = object.children[i].classList[j];
-
-		        //If the value = the passed in target, the element is pushed to the elementList array.
-		        if (objClass === className) {
-		          var elem = object.children[i];
-
-		          //Unshifting to matching the array order in the spec test.
-		          elementList.unshift(elem);
-		        }
-		      }
+	          //Unshifting to matching the array order in the spec test.
+	          elementList.unshift(elem);
+	        }
+	      });
 	    }
-    }
+    })
   };
-    findElement(document, className);
+ 
+ //The first call of the findElement function on the entire document.
+  findElement(document, className);
 
-    return elementList;
-  };
+  return elementList;
+};
 
 		
 
