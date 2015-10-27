@@ -3,50 +3,53 @@
 
 // but you don't so you're going to write it from scratch:
 
-var stringifyJSON = function(obj) {
-
-  //An empty string that will be added to 
-  var objString="";
-  
-  //This function that turns the key value pairs to a string and adds that string to the objString
   var addToString = function(objToString) {
-    console.log("test object directly inside addToString: ", obj)
+    //console.log("test object directly inside addToString: ", objToString, "objToString.length: ", objToString.length = true)
         
         //This conditinal tests if the passed in argument is an Array
-        if(objToString.length && typeof objToString === "object") {
+
+
+        if(Array.isArray(objToString)) {
           objString += "[";
           
           //If so, iterate through the array and recursively call the addtoString on each value         
-          _.each(objToString, function(value, index) {
+          _.each(objToString, function(arrValue, index) {
             //objString += (keyInValue+":")
 
-            console.log("objString value inside of each: ", value, "value type inside of each: ", typeof value )
-            addToString(value);
+            console.log("objString value inside of each for Object conditional: ", arrValue, "value type inside of each: ", typeof arrValue )
+            addToString(arrValue);
           });
-          objString += "]";
+          
+         
+          //This deletes the last comma after the last stringified element in a collection. 
+          objString.charAt(objString.length-1) === "," ? objString = objString.slice(0, - 1) : objString;
+          
+          objString += "],";
         }
 
         //If the passed in argument is a string, add it to the objString.
-        if(typeof objToString === "string") {
+        else if(typeof objToString === "string") {
           //Escape the string
-           objString += value;
+           objString += objString;
 
         }
         
         //If the is converted to a string and added to the objString if it's a number, boolean, or null.
-        if(typeof objToString === "boolean" || typeof objToString ===  "number" || typeof objToString === null) {
+        else if(typeof objToString === "boolean" || typeof objToString ===  "number" || typeof objToString === null) {
           console.log
-          objString += objToString.toString();
+          //objString += objToString.toString();
+          objString = objString.concat(objToString.toString(),",");
         }
         
         //If the argument is an object that isn't an array.
-        if(typeof objToString === "object" && !objToString.length) {
+        else if(typeof objToString === "object" && !Array.isArray(objToString)) {
           objString += "{";
-          _.each(objToString, function(value, key) {
+          _.each(objToString, function(objValue, key) {
 
             //Each key is added to the objString and the value is passed in to the addToString function.
             objString += (key+":")
-            addToString(value);
+            console.log('key inside of object _.each: ', key, 'objValue: ', objValue);
+            addToString(objValue);
           });
           objString += "}";
         }
@@ -56,6 +59,9 @@ var stringifyJSON = function(obj) {
   //Initially invoking addToString with the obj passed into the stringify function.
   addToString(obj);
 
+  //This deletes the last comma after the closing bracket. 
+  objString.charAt(objString.length-1) === "," ? objString = objString.slice(0, - 1) : objString;
+        
   return objString;       
 
 };
