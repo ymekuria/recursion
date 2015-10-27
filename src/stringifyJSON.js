@@ -16,7 +16,7 @@
           _.each(objToString, function(arrValue, index) {
             //objString += (keyInValue+":")
 
-            console.log("objString value inside of each for Object conditional: ", arrValue, "value type inside of each: ", typeof arrValue )
+            console.log("objString value inside of each for Array conditional: ", arrValue, "value type inside of each: ", typeof arrValue )
             addToString(arrValue);
           });
           
@@ -30,7 +30,7 @@
         //If the passed in argument is a string, add it to the objString.
         else if(typeof objToString === "string") {
           //Escape the string
-           objString += objString;
+           objString += objToString;
 
         }
         
